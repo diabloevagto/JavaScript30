@@ -58,6 +58,19 @@
       /* account for the height of the clock hands */
     }
 
+    .clock-face::after {
+      width: 1em;
+      height: 1em;
+      background-color: yellow;
+      position: absolute;
+      left: 48%;
+      top: 48.5%;
+      content: '';
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1),
+      0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
     .hand {
       width: 50%;
       height: 6px;
