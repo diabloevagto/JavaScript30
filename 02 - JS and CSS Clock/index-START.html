@@ -64,34 +64,47 @@
       background: black;
       position: absolute;
       top: 50%;
-      transform-origin: 100%;
+      transform-origin: right;
       transform: rotate(90deg);
-      transition: all .05s;
+      transition: all 1s;
       transition-timing-function: ease-in-out;
     }
   </style>
 
   <script>
-    const hourHand = document.querySelector('.hour-hand');
-    const minsHand = document.querySelector('.min-hand');
-    const secondHand = document.querySelector('.second-hand');
+    let hourDegrees = 90;
+    let minsDegrees = 90;
+    let secondsDegrees = 90;
 
-    function setDate() {
-      const now = new Date();
+    function drawHand() {
+      const hourHand = document.querySelector('.hour-hand');
+      const minsHand = document.querySelector('.min-hand');
+      const secondHand = document.querySelector('.second-hand');
 
-      const seconds = now.getSeconds();
-      const secondsDegrees = ((seconds / 60) * 360) + 90;
-      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
-
-      const mins = now.getMinutes();
-      const minsDegrees = ((mins / 60) * 360) + ((seconds / 60) * 6) + 90;
-      minsHand.style.transform = `rotate(${minsDegrees}deg)`;
-
-      const hour = now.getHours();
-      const hourDegrees = ((hour / 12) * 360) + ((mins / 60) * 30) + 90;
       hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+      minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
     }
 
+    function initDate() {
+      const now = new Date();
+
+      secondsDegrees = ((now.getSeconds() / 60) * 360) + 90;
+      minsDegrees = ((now.getMinutes() / 60) * 360) + ((now.getSeconds() / 60) * 6) + 90;
+      hourDegrees = ((now.getHours() / 12) * 360) + ((now.getMinutes() / 60) * 30) + 90;
+
+      drawHand();
+    }
+
+    function setDate() {
+      secondsDegrees += ((1 / 60) * 360);
+      minsDegrees += ((1 / 60 / 60) * 360)
+      hourDegrees += ((1 / 60 / 60 / 12) * 360);
+
+      drawHand();
+    }
+
+    initDate();
     setInterval(setDate, 1000);
   </script>
 </body>
