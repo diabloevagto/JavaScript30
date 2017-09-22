@@ -155,10 +155,17 @@
       this.classList.toggle('open');
     }
 
+    /*
+    當快速按兩下時會把 open 類別移除，但同樣會有 flex-grow 事件產生。
+    這時候照樣增加 open-active 事件就會造成錯誤
+    */
     function toggleActive(e) {
-      console.log(e);
       if (e.propertyName === 'flex-grow') {
-        this.classList.toggle('open-active');
+        if (this.classList.contains('open')) {
+          this.classList.toggle('open-active');
+        } else {
+          this.classList.remove('open-active')
+        }
       }
     }
 
