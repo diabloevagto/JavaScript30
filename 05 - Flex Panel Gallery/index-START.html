@@ -152,7 +152,14 @@
     const panels = document.querySelectorAll('.panel');
 
     function toggleOpen() {
+      clearToggle(this)
       this.classList.toggle('open');
+    }
+
+    function clearToggle(target) {
+      Array.from(panels)
+        .filter(panel => panel !== target) //當按下的已經被展開時要跳過，這樣才有結束動畫
+        .forEach(panel => panel.classList.remove('open', 'open-active'));
     }
 
     /*
