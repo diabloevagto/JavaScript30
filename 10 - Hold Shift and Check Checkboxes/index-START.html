@@ -98,6 +98,24 @@
   </div>
 
   <script>
+    let lastCheckbox = null;
+    const checkboxes = [...document.querySelectorAll('.inbox input[type="checkbox"]')];
+
+    function handleCheck(e) {
+      if (e.shiftKey && this.checked && lastCheckbox && lastCheckbox.checked) {
+        const currentCheckIndex = checkboxes.findIndex(checkbox => checkbox === this);
+        const lastCheckedIndex = checkboxes.findIndex(checkbox => checkbox === lastCheckbox);
+
+        [begin, end] = [Math.min(currentCheckIndex, lastCheckedIndex), Math.max(currentCheckIndex, lastCheckedIndex)]
+
+        checkboxes
+          .slice(begin, end)
+          .forEach(checkbox => checkbox.checked = true);
+      }
+      lastCheckbox = this;
+    }
+
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck))
   </script>
 </body>
 
