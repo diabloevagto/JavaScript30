@@ -7,6 +7,7 @@
 </head>
 
 <body>
+  <button id="clearBtn">CLEAR</button>
   <canvas id="draw" width="800" height="800"></canvas>
   <script>
     const canvas = document.querySelector('canvas');
@@ -50,6 +51,13 @@
     canvas.addEventListener('mousedown', (e) => {
       isDrawing = true;
       [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    document.querySelector("#clearBtn").addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hue = 0;
+      ctx.lineWidth = 10;
+      lineWidthDirection = true;
     });
   </script>
 
