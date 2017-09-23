@@ -70,3 +70,10 @@ progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mouseup', () => mousedown = false);
 progress.addEventListener('mouseout', () => mousedown = false);
+
+//fullscreen
+let fullscreenBtn = document.createElement("button");
+document.querySelector('.player__controls').appendChild(fullscreenBtn);
+fullscreenBtn.textContent = '◳';
+fullscreenBtn.classList.add('player__button');
+fullscreenBtn.addEventListener('click', () => video.webkitRequestFullScreen && video.webkitRequestFullScreen());
