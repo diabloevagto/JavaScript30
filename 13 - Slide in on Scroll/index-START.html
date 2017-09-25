@@ -147,6 +147,27 @@
         if (callNow) func.apply(context, args);
       };
     }
+
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide(e) {
+      console.log(window.scrollY, window.innerHeight)
+      sliderImages.forEach(sliderImage => {
+        const sildeInAt = window.scrollY + window.innerHeight - sliderImage.height;
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+        const isHalfShow = sildeInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if (isHalfShow && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        } else {
+          sliderImage.classList.remove('active');
+        }
+
+      });
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide));
   </script>
 
   <style>
