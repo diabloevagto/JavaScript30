@@ -40,6 +40,8 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <button id="selectAll">select all</button>
+    <button id="clearAll">clear all</button>
   </div>
 
   <script>
@@ -79,10 +81,19 @@
       localStorage.setItem('items', JSON.stringify(items));
     }
 
+    function toggleAll(bool) {
+      items.forEach(item => item.done = bool)
+      populateList(items, itemsList);
+      localStorage.setItem('items', JSON.stringify(items));
+    }
+
     addItems.addEventListener('submit', addItem);
     itemsList.addEventListener('click', toggleDone);
 
     populateList(items, itemsList);
+
+    document.querySelector('#selectAll').addEventListener('click', () => toggleAll(true));
+    document.querySelector('#clearAll').addEventListener('click', () => toggleAll(false));
   </script>
 
 
