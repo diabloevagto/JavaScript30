@@ -1,6 +1,5 @@
 const video = document.querySelector('.player');
-const canvas = document.querySelector('.photo');
-const ctx = canvas.getContext('2d');
+const canvases = document.querySelectorAll('.photo');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
 
@@ -18,19 +17,25 @@ function getVideo() {
 
 function paintToCanvas() {
     const [width, height] = [video.videoWidth, video.videoHeight];
-    canvas.width = width;
-    canvas.height = height;
+
+    canvases.forEach(canvas => {
+        canvas.width = width;
+        canvas.height = height;
+    });
+
 
     return setInterval(() => {
-        ctx.drawImage(video, 0, 0, width, height);
-        //take the pixels out
-        let pixels = ctx.getImageData(0, 0, width, height);
-        //mass with them
-        // pixels = redEffect(pixels);
-        // pixels = rgbSplit(pixels);
-        pixels = greenScreen(pixels);
-        //put them back
-        ctx.putImageData(pixels, 0, 0);
+        const process = [redEffect, rgbSplit, greenScreen];
+        canvases.forEach((canvas, index) => {
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, width, height);
+            //take the pixels out
+            let pixels = ctx.getImageData(0, 0, width, height);
+            //mass with them
+            pixels = process[index](pixels);
+            //put them back
+            ctx.putImageData(pixels, 0, 0);
+        })
     }, 16);
 }
 
@@ -40,7 +45,7 @@ function takePhoto() {
     snap.play();
 
     //take the data out of the canvas
-    const data = canvas.toDataURL('image/jpeg');
+    const data = canvases[0].toDataURL('image/jpeg');
     const link = document.createElement('a');
     link.href = data;
     link.setAttribute('download', 'handsome');
