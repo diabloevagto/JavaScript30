@@ -28,10 +28,12 @@
     <script>
     const triggers = document.querySelectorAll('a');
     const highlight = document.createElement('span');
+    let highlightTarget = null;
     highlight.classList.add('highlight');
     document.body.appendChild(highlight);
 
     function highlightLink() {
+      highlightTarget = this;
       const highlightCoords = {
         width: this.getBoundingClientRect().width,
         height: this.getBoundingClientRect().height,
@@ -45,6 +47,9 @@
     }
 
     triggers.forEach(a => a.addEventListener('mouseenter', highlightLink));
+    window.addEventListener('resize', () => {
+      highlightLink.call(highlightTarget);
+    });
   </script>
 </body>
 </html>
