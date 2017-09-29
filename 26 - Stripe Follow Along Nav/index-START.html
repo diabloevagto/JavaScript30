@@ -226,6 +226,37 @@
   </style>
 
   <script>
+    const triggers = document.querySelectorAll('.cool > li');
+    const background = document.querySelector('.dropdownBackground');
+    const nav = document.querySelector('.top');
+
+    function handleEnter() {
+      this.classList.add('trigger-enter');
+      setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+
+      const dropbown = this.querySelector('.dropdown');
+      const navCoords = nav.getBoundingClientRect();
+
+      const dropdownCoords = {
+        width: dropbown.getBoundingClientRect().width,
+        height: dropbown.getBoundingClientRect().height,
+        top: dropbown.getBoundingClientRect().top - navCoords.top,
+        left: dropbown.getBoundingClientRect().left - navCoords.left
+      };
+
+      background.classList.add('open');
+      background.style.width = `${dropdownCoords.width}px`;
+      background.style.height = `${dropdownCoords.height}px`;
+      background.style.transform = `translate(${dropdownCoords.left}px, ${dropdownCoords.top}px)`;
+    }
+
+    function handleLeave() {
+      this.classList.remove('trigger-enter', 'trigger-enter-active');
+      background.classList.remove('open');
+    }
+
+    triggers.forEach(tigger => tigger.addEventListener('mouseenter', handleEnter));
+    triggers.forEach(tigger => tigger.addEventListener('mouseleave', handleLeave));
   </script>
 
 </body>
