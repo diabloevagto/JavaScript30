@@ -79,6 +79,7 @@
     function bonk(e) {
       if (e.isTrusted === false) return;
       scoreBoard.textContent = parseInt(scoreBoard.textContent) + 1;
+      e.target.parentNode.classList.remove('up');
     }
 
     moles.forEach(mole => mole.addEventListener('click', bonk));
