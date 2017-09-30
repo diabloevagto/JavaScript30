@@ -24,12 +24,19 @@
 
     function handleMove(e) {
       if (isDown === false) return;
-      const min = 0.4;
-      const max = 4;
-      const y = e.pageY - this.offsetTop;
+      const max = {
+        rate: 4
+      };
+      const min = {
+        rate: 0.4
+      };
+      min.height = this.offsetHeight * min.rate / max.rate;
+      max.height = this.offsetHeight * this.offsetHeight;
+
+      const y = (e.pageY - this.offsetTop > min.height) ? e.pageY - this.offsetTop : min.height;
       const percent = y / this.offsetHeight;
       const height = Math.round(percent * 100) + '%';
-      const playbackRate = percent * (max - min) + min;
+      const playbackRate = percent * max.rate;
 
       bar.style.height = height;
       bar.textContent = playbackRate.toFixed(2) + 'x';
