@@ -20,8 +20,10 @@
     const speed = document.querySelector('.speed');
     const bar = document.querySelector('.speed-bar');
     const video = document.querySelector('.flex');
+    let isDown = false;
 
     function handleMove(e) {
+      if (isDown === false) return;
       const min = 0.4;
       const max = 4;
       const y = e.pageY - this.offsetTop;
@@ -35,6 +37,9 @@
       video.playbackRate = playbackRate;
     }
 
+
+    speed.addEventListener('mousedown', (e) => isDown = true);
+    speed.addEventListener('mouseup', (e) => isDown = false);
     speed.addEventListener('mousemove', handleMove);
   </script>
 </body>
