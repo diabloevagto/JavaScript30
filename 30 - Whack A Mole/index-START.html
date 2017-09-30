@@ -70,10 +70,14 @@
     }
 
     function startGame() {
+      document.querySelector('button').disabled = true;
       scoreBoard.textContent = 0;
       timeUp = false;
       peep();
-      setTimeout(() => timeUp = true, 10000);
+      setTimeout(() => {
+        timeUp = true;
+        document.querySelector('button').disabled = false;
+      }, 10000);
     }
 
     function bonk(e) {
